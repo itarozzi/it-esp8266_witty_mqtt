@@ -11,7 +11,6 @@ const int BLUE = 13;
 #include "Adafruit_MQTT_Client.h"
 
 
-
 /**************** Configuration from external file *******************/
 #include "myconfig.h"
 
@@ -115,6 +114,9 @@ void loop()
   Adafruit_MQTT_Subscribe *subscription;
   while ((subscription = mqtt.readSubscription(100))) {
     if (subscription == &mqtt_rgb) {
+      // Nota: il valore del topic per l'assegnazione del colore del red rgb va assegnato secondo il seguente formato:
+      // #RRGGBB      esempio, per il rosso #ff0000
+      
       char* rgb_val = (char*) mqtt_rgb.lastread;
       *(rgb_val+7)= 0x00;
       long rgb =  strtol(rgb_val+1, 0, 16);
